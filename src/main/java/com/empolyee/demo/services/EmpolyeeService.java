@@ -2,7 +2,9 @@ package com.empolyee.demo.services;
 
 import com.empolyee.demo.dto.EmpolyeeCreate;
 import com.empolyee.demo.dto.EmpolyeeUpdate;
+import com.empolyee.demo.entites.Department;
 import com.empolyee.demo.entites.Empolyee;
+import com.empolyee.demo.repositry.DepartmentRepo;
 import com.empolyee.demo.repositry.EmpolyeeRepo;
 import com.empolyee.demo.shared.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,14 @@ import java.util.UUID;
 @Service
 public class EmpolyeeService {
     private final EmpolyeeRepo empolyeeRepo;
+    private final DepartmentRepo departmentRepo;
 
 
-    public EmpolyeeService(EmpolyeeRepo empolyeeRepo) {
+    public EmpolyeeService(EmpolyeeRepo empolyeeRepo, DepartmentRepo departmentRepo) {
         this.empolyeeRepo = empolyeeRepo;
+        this.departmentRepo = departmentRepo;
+
+
     }
 
     public List<Empolyee> getAll() {
@@ -36,7 +42,8 @@ public class EmpolyeeService {
         employee.setPhoneNumber(empolyee.phoneNumber());
         employee.setHireDate(empolyee.hireDate());
         employee.setPosition(empolyee.position());
-        employee.setDepartmentId(empolyee.departmentId());
+        Department department = departmentRepo.findById(empolyee.departmentId()).orElseThrow(() -> new RuntimeException("Department not found!"));
+        employee.setDepartmentId(department);
         return empolyeeRepo.save(employee);
     }
 
@@ -49,7 +56,6 @@ public class EmpolyeeService {
         existing.setPhoneNumber(empolyee.phoneNumber());
         existing.setHireDate(empolyee.hireDate());
         existing.setPosition(empolyee.position());
-        existing.setDepartmentId(empolyee.departmentId());
 
         return empolyeeRepo.save(existing);
     }

@@ -1,8 +1,6 @@
 package com.empolyee.demo.entites;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +37,7 @@ public class Empolyee {
     @Column(name = "position", nullable = false)
 
     private String position;
-    @Column(name = "departmentId", nullable = false)
-//    @UuidGenerator
-    private UUID departmentId;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "departmentId", nullable = false)
+    private Department departmentId;
 }
