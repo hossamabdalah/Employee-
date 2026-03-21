@@ -7,38 +7,13 @@ import com.empolyee.demo.repositry.EmpolyeeRepo;
 import com.empolyee.demo.shared.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class EmpolyeeService {
     private final EmpolyeeRepo empolyeeRepo;
-    ArrayList<Empolyee> empolyees = new ArrayList<>(
-            List.of(
-                    new Empolyee(
-                            UUID.randomUUID(),
-                            "hossam",
-                            "islam",
-                            "sam@gmail.com",
-                            "01212121",
-                            LocalDate.of(2023, 2, 23),
-                            "software engineer",
-                            UUID.randomUUID()
-                    ),
-                    new Empolyee(
-                            UUID.randomUUID(),
-                            "hossam",
-                            "islam",
-                            "sam@gmail.com",
-                            "01212121",
-                            LocalDate.of(2023, 2, 23),
-                            "software engineer",
-                            UUID.randomUUID()
-                    )
-            )
-    );
+
 
     public EmpolyeeService(EmpolyeeRepo empolyeeRepo) {
         this.empolyeeRepo = empolyeeRepo;
