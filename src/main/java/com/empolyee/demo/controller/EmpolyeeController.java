@@ -2,8 +2,11 @@ package com.empolyee.demo.controller;
 
 import com.empolyee.demo.dto.EmpolyeeCreate;
 import com.empolyee.demo.dto.EmpolyeeUpdate;
+import com.empolyee.demo.dto.LeaveRequestCreate;
 import com.empolyee.demo.entites.Empolyee;
+import com.empolyee.demo.entites.LeaveRequest;
 import com.empolyee.demo.services.EmpolyeeService;
+import com.empolyee.demo.services.LeaveRequestService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +19,12 @@ import java.util.UUID;
 @RequestMapping("empolyees")
 public class EmpolyeeController {
     private final EmpolyeeService empolyeeService;
+    private final LeaveRequestService leaveRequestService;
 
 
-    public EmpolyeeController(EmpolyeeService empolyeeService) {
+    public EmpolyeeController(EmpolyeeService empolyeeService, LeaveRequestService leaveRequestService) {
         this.empolyeeService = empolyeeService;
+        this.leaveRequestService = leaveRequestService;
     }
 
     @GetMapping
@@ -52,6 +57,22 @@ public class EmpolyeeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         empolyeeService.delete(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
+
+    @PostMapping("/{id}/leave-request")
+    public ResponseEntity<LeaveRequest> leaveRequest(
+            @RequestBody @Valid LeaveRequestCreate leaveRequest, @PathVariable UUID id) {
+        LeaveRequest leaverequest = leaveRequestService.create(leaveRequest, id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(leaverequest);
+
+    }
+
+    @GetMapping("/{id}/leave-request")
+    public ResponseEntity<List<LeaveRequest>> leaveRequestByEmpolyeeId(@PathVariable UUID id) {
+        List<LeaveRequest> leaveRequests = leaveRequestService.getByEmpolyeeId(id);
+        return new ResponseEntity<>(leaveRequests, HttpStatus.OK);
+    }
+
 }

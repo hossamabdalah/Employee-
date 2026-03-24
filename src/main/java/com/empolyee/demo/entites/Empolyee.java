@@ -17,7 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Empolyee {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @UuidGenerator
     private UUID id;
     @Column(name = "first_name", nullable = false)
