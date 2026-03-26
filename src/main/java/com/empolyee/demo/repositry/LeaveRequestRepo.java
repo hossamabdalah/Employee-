@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface LeaveRequestRepo extends JpaRepository<LeaveRequest, UUID> {
-    List<LeaveRequest> findByEmpolyeeId(UUID id);
+    List<LeaveRequest> findByEmpolyee_Id(UUID id);
 }

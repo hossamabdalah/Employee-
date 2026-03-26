@@ -2,6 +2,7 @@ package com.empolyee.demo.controller;
 
 import com.empolyee.demo.dto.AuthSignupCreate;
 import com.empolyee.demo.services.AuthRequestService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signin(@RequestBody AuthSignupCreate authSignupCreate) {
+    public ResponseEntity<String> signin(@RequestBody @Valid AuthSignupCreate authSignupCreate) {
         authRequestService.signup(authSignupCreate);
         return new ResponseEntity<>("Signed in", HttpStatus.OK);
     }

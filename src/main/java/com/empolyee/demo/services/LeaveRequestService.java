@@ -36,7 +36,7 @@ public class LeaveRequestService {
     }
 
     public List<LeaveRequest> getByEmpolyeeId(UUID id) {
-        return leaveRequestRepo.findByEmpolyeeId(id);
+        return leaveRequestRepo.findByEmpolyee_Id(id);
 
     }
 }
